@@ -11,9 +11,6 @@ sim_path = "../m1e4_1_Nbody6_notidal/"
 
 
 
-################################################################
-#main
-################################################################
 
 
 files = []
@@ -42,9 +39,10 @@ high_m_lagr = np.zeros(len(files_snap))
 for i in range(len(files_snap)):
 	
     print(sim_path+"data_Nbody6_"+str(files_snap[i]))
-	#Load masses, positions velocities
+
+    #Load masses, positions velocities
     m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data_Nbody6_"+str(files_snap[i]), comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
-    N_part=len(m)
+    
     #evaluate density and rescale to the center of density
     dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
 
@@ -64,7 +62,7 @@ for i in range(len(files_snap)):
             y_lm.append(y[j])
             z_lm.append(z[j])
 
-        elif(m[j]>=10.):
+        elif(m[j]>10.):
              m_hm.append(m[j])
              x_hm.append(x[j])
              y_hm.append(y[j])
@@ -77,11 +75,11 @@ for i in range(len(files_snap)):
     x_hm  = np.array(x_hm)
     y_hm  = np.array(y_hm)
     z_hm  = np.array(z_hm)
-    low_m_lagr[i]=lagr_radius(m_lm,x_lm,y_lm,z_lm,lagr=50) #Low mass stars half mass radius
-    high_m_lagr[i]=lagr_radius(m_hm,x_hm,y_hm,z_hm,lagr=50) #High mass stars half mass radius
-    print(np.sum(m_lm))
-    print (np.sum(m_hm))
-    print(np.sum(m))
+    low_m_lagr[i]=lagr_radius(m_lm,x_lm,y_lm,z_lm,lagr=20) #Low mass stars 20% lagrangian radius
+    high_m_lagr[i]=lagr_radius(m_hm,x_hm,y_hm,z_hm,lagr=20) #High mass stars 20& lagrangian radius
+    print(len(m_lm),np.sum(m_lm))
+    print (len(m_hm),np.sum(m_hm))
+    print(len(m),np.sum(m))
     
 	
 #Save the radii information in a file
@@ -98,7 +96,7 @@ plt.plot(files_snap,high_m_lagr,color='b',label=r'High mass stars ($M > 10 M_{\o
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Time [Myr]")
-plt.ylabel("Half Mass Radius [pc]")
+plt.ylabel("20% Lagrangian Radius [pc]")
 plt.legend(loc='best')
 
 

@@ -11,6 +11,7 @@ sim_path = "../sim_hydro_m1e41/"
 	
 files = []
 
+
 #Find all "data" files in the selected path
 for r, d, f in os.walk(sim_path):
     for file in f:
@@ -34,16 +35,14 @@ files_snap = np.sort(np.array(files_snap))
 low_m_lagr = np.zeros(len(files_snap))
 high_m_lagr = np.zeros(len(files_snap))
 
+
 for i in files_snap:
-    print(sim_path+"data."+str(i))
+    print(sim_path+"data."+str(i)+".single")
 	#Load masses, positions velocities of the single stars
     m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data."+str(i)+".single", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
         
-            
-            
-	#evaluate density and rescale to the center of density
-    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
 
+    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
     m_lm  = []
     x_lm  = []
     y_lm  = []
@@ -66,24 +65,33 @@ for i in files_snap:
              y_hm.append(y[j])
              z_hm.append(z[j])
 
-             #LOAD DATA FROM THE BINARIES 
-    m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data."+str(i)+".binary", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
+    #LOAD DATA FROM THE BINARIES
+    
+    mb, xb, yb, zb, vxb, vyb, vzb = np.genfromtxt(sim_path+"data."+str(i)+".binary", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
     m1=[]
     x1=[]
     y1=[]
+    z1=[]
+    y2=[]
     m2=[]
     x2=[]
     y2=[]
-    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
-    for j in range (0,len(m)-1,2):
-        m1.append(m[j])
-        x1.append(x[j])
-        y1.append(y[j])
-        m2.append(m[j+1])
-        x2.append(x[j+1])
-        y2.append(y[j+1])
+    z2=[]
 
-    m,x,y=binary_center(m1,x1,y1,m2,x2,y2)
+
+    dens, xb, yb, zb, vxb, vyb, vzb = find_and_rescale_cod(mb, xb, yb, zb, vxb, vyb, vzb)
+
+    for j in range (0,len(mb)-1,2):
+        m1.append(mb[j])
+        x1.append(xb[j])
+        y1.append(yb[j])
+        z1.append(zb[j])
+        m2.append(mb[j+1])
+        x2.append(xb[j+1])
+        y2.append(yb[j+1])
+        z2.append(zb[j+1])
+
+    m,x,y,z=binary_center(m1,x1,y1,z1,m2,x2,y2,z2)
 
 
     for j in np.arange(len(m)):
@@ -93,7 +101,7 @@ for i in files_snap:
             y_lm.append(y[j])
             z_lm.append(z[j])
 
-        elif(m[j]>=10.):
+        elif(m[j]>10.):
              m_hm.append(m[j])
              x_hm.append(x[j])
              y_hm.append(y[j])
@@ -108,9 +116,10 @@ for i in files_snap:
     x_hm  = np.array(x_hm)
     y_hm  = np.array(y_hm)
     z_hm  = np.array(z_hm)
-    low_m_lagr[i]=lagr_radius(m_lm,x_lm,y_lm,z_lm,lagr=50) #Low mass stars half mass radius
-    high_m_lagr[i]=lagr_radius(m_hm,x_hm,y_hm,z_hm,lagr=50) #High mass stars half mass radius
-
+    low_m_lagr[i]=lagr_radius(m_lm,x_lm,y_lm,z_lm,lagr=20) #Low mass stars half mass radius
+    high_m_lagr[i]=lagr_radius(m_hm,x_hm,y_hm,z_hm,lagr=20) #High mass stars half mass radius
+    print(len(m_lm),np.sum(m_lm))
+    print (len(m_hm),np.sum(m_hm))
 	
 #Save the radii information in a file
 
@@ -126,7 +135,7 @@ plt.plot(files_snap,high_m_lagr,color='b',label=r'High mass stars ($M > 10 M_{\o
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Time [Myr]")
-plt.ylabel("Half Mass Radius [pc]")
+plt.ylabel("20% Lagrangian Radius [pc]")
 plt.legend(loc='best')
 
 

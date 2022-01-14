@@ -74,12 +74,18 @@ def lagr_radius(m,x,y,z, lagr=50):
 
     return r_lagr
 
-def binary_center(m1,x1,y1,m2,x2,y2):
+
+
+#Function to evaluate the center of mass of a binary system
+
+def binary_center(m1,x1,y1,z1,m2,x2,y2,z2):
     m=np.zeros(len(m1))
     x=np.zeros(len(m1))
     y=np.zeros(len(m1))
+    z=np.zeros(len(m1))
     for j in range(len(m)):
       m[j]=m1[j]+m2[j]  
-      x[j]= (m1[j]*x1[j]+m2[j]*x2[j])/(m[j])
+      x[j]= (m1[j]*x1[j] + m2[j]*x2[j])/(m[j])
       y[j]= (m1[j]*y1[j] + m2[j]*y2[j])/m[j]
-    return m,x,y
+      z[j]= (m1[j]*z1[j] + m2[j]*z2[j])/m[j]
+    return m,x,y,z

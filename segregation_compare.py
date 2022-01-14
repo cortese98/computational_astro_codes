@@ -14,7 +14,7 @@ plt.plot(t2,hm_nbody,color='green',label='High Mass Nbody6++')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Time [Myr]")
-plt.ylabel("Half Mass Radius [pc]")
+plt.ylabel("20% Lagrangian Radius [pc]")
 plt.legend(loc='best')
 
 
