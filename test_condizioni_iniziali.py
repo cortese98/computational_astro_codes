@@ -35,7 +35,12 @@ print(len(xp))
 print(len(xb))
 print(len(xn))
 
+mtot_Petar1= np.sum(mt)
+mtot_Petar2= np.sum(mp) + np.sum(mb)
+mtot_Nbody = np.sum(mn)
 
+print("Massa Totale Petar: ", mtot_Petar1 , "   ", mtot_Petar2)
+print("Massa Totale Nbody: ", mtot_Nbody)
 
 
 
