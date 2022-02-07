@@ -55,11 +55,11 @@ for i in files_snap:
         vxtot.append(vx[j])
         vytot.append(vy[j])
         vztot.append(vz[j])
-    #BINARY STARS
+    
+#BINARY STARS
     
     print(sim_path+"data."+str(i)+".binary")
     mb, xb, yb, zb, vxb, vyb, vzb = np.genfromtxt(sim_path+"data."+str(i)+".binary", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
-#    dens, xb, yb, zb, vxb, vyb, vzb = find_and_rescale_cod(mb, xb, yb, zb, vxb, vyb, vzb)
     for j in range (0,len(mb)):
         mtot.append(mb[j])
         xtot.append(xb[j])
