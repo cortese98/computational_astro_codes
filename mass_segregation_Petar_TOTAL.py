@@ -48,41 +48,10 @@ for i in files_snap:
 
     print(sim_path+"data."+str(i))
 
-    #SINGLE STARS
+    #ALL STARS
     
-    m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data."+str(i)+".single", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
-#    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
-    for j in range (len(m)):
-        mtot.append(m[j])
-        xtot.append(x[j])
-        ytot.append(y[j])
-        ztot.append(z[j])
-        vxtot.append(vx[j])
-        vytot.append(vy[j])
-        vztot.append(vz[j])
+    mtot, xtot, ytot, ztot, vxtot, vytot, vztot = np.genfromtxt(sim_path+"data."+str(i), skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
 
-
-    #BINARY STARS
-    
-
-    mb, xb, yb, zb, vxb, vyb, vzb = np.genfromtxt(sim_path+"data."+str(i)+".binary", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
-#    dens, xb, yb, zb, vxb, vyb, vzb = find_and_rescale_cod(mb, xb, yb, zb, vxb, vyb, vzb)
-    for j in range (0,len(mb)):
-        mtot.append(mb[j])
-        xtot.append(xb[j])
-        ytot.append(yb[j])
-        ztot.append(zb[j])
-        vxtot.append(vxb[j])
-        vytot.append(vyb[j])
-        vztot.append(vzb[j])
-    
-    mtot=np.array(mtot)
-    xtot=np.array(xtot)
-    ytot=np.array(ytot)
-    ztot=np.array(ztot)
-    vxtot=np.array(vxtot)
-    vytot=np.array(vytot)
-    vztot=np.array(vztot)
 
     dens, xtot, ytot, ztot, vxtot, vytot, vztot = find_and_rescale_cod(mtot, xtot, ytot, ztot, vxtot, vytot, vztot)
 
@@ -129,7 +98,7 @@ for i in files_snap:
 #Save the radii information in a file
 
 X = np.stack((files_snap,low_m_lagr,high_m_lagr),axis=-1)
-np.savetxt('segregation_PeTar.txt',X,delimiter="        ",fmt='%.1f %.8f %.8f')
+np.savetxt('segregation_PeTar_totali.txt',X,delimiter="        ",fmt='%.1f %.8f %.8f')
 
 
 
@@ -144,6 +113,5 @@ plt.ylabel("20% Lagrangian Radius [pc]")
 plt.legend(loc='best')
 
 
-plt.savefig('plots/mass_segregation_Petar2.pdf')
+#plt.savefig('plots/mass_segregation_Petar2.pdf')
 plt.show()
-

@@ -9,6 +9,7 @@ plt.rcParams.update({'font.size': 14})
 
 sim_path = "../m1e4_1_Nbody6_notidal/"
 
+conv = 1.022712165045695 #Conversion factor between Nbody and PeTar velocity unit
 
 files = []
 
@@ -29,19 +30,27 @@ for f in files:
 files_snap = np.sort(np.array(files_snap))
 
 
-
+k=0
 for i in range(len(files_snap)):
 	
     print(sim_path+"data_Nbody6_"+str(files_snap[i]))
 	#Load masses, positions velocities
     m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data_Nbody6_"+str(files_snap[i]), comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
-    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
-    plt.scatter(vx,vy,s=3)
-    plt.xlim(-10,10)
-    plt.ylim(-10,10)
-    plt.xlabel(r"$V_x$ [km/s]")
-    plt.ylabel(r"$V_y$ [km/s]")
+    vx *= conv
+    vy *= conv
+    vz *= conv
+    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx , vy, vz)
+    logm=np.log10(m)
+    plt.scatter(vx,vy,s=3,c=logm)
+    cbar=plt.colorbar()
+    plt.clim(0,2.2)
+    plt.xlim(-100,100)
+    plt.ylim(-100,100)
+    plt.xlabel(r"$V_x$ [pc/Myr]")
+    plt.ylabel(r"$V_y$ [pc/Myr]")
     plt.title(f"Time= {files_snap[i]} Myr",loc='center')
-    plt.savefig(f"velocities_Nbody_noTidal/velocity_Nbody_{files_snap[i]}_NT.png")
+    plt.tight_layout()
+    plt.savefig(f"velocities_Nbody_noTidal/velocity_Nbody_{k}.png")
+    k+=1
     plt.clf()
     

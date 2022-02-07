@@ -1,56 +1,71 @@
 import numpy as np
 import matplotlib.pyplot as plt
-plt.rcParams.update({'font.size': 20})
+plt.rcParams.update({'font.size': 18})
+
+
+
+
+fig,ax = plt.subplots(2,1,figsize=(8,8),sharex=True)
+#plt.subplots_adjust(wspace=0.00)
+plt.subplots_adjust(hspace=0.00)
+
 
 # PETAR
 
 m0p = np.genfromtxt( "../sim_hydro_m1e41/data.0", usecols=(0),skip_header=1, comments="#", unpack=True)
 a=np.log10(min(m0p))
 b=np.log10(max(m0p))
-mybins=np.logspace(a,b,num=20)
-plt.hist(m0p,bins=mybins,histtype='step',log=True,linewidth=2, label="Petar, t=0 Myr")
+mybins=np.logspace(a,b,num=50)
+ax[0].hist(m0p,bins=mybins,histtype='step',log=True,linewidth=2,color='orange', label="Petar, total stars")
+ax[1].hist(m0p,bins=mybins,histtype='step',log=True,linewidth=2,color='orange', label="Petar, total stars")
 m0_tot=np.sum(m0p)
 
+m0tot=[]
+
+m0sing = np.genfromtxt( "../sim_hydro_m1e41/data.0.single", usecols=(0),skip_header=1, comments="#", unpack=True)
+m0bin = np.genfromtxt( "../sim_hydro_m1e41/data.0.binary", usecols=(0),skip_header=1, comments="#", unpack=True)
+
+for i in range (len(m0sing)):
+    m0tot.append(m0sing[i])
+for i in range (len(m0bin)):
+    m0tot.append(m0bin[i])
+m0tot=np.array(m0tot)
+a=np.log10(min(m0tot))
+b=np.log10(max(m0tot))
+mybins=np.logspace(a,b,num=50)
+ax[1].hist(m0tot,bins=mybins,histtype='step',log=True,linewidth=2,color='green', label="Petar, single + binaries")
+
+ax[0].set_xscale("log")
+ax[1].set_xscale("log")
 
 
-mfp = np.genfromtxt( "../sim_hydro_m1e41/data.117", usecols=(0),skip_header=1, comments="#", unpack=True)
-l=np.log10(min(mfp))
-m=np.log10(max(mfp))
-mybins=np.logspace(l,m,num=20)
-plt.hist(mfp,bins=mybins,histtype='step',log=True,linewidth=2, label="Petar, t=117 Myr")
-mf_tot=np.sum(mfp)
-print("Initial mass Petar: ", m0_tot)
-print("Final mass Petar: ", mf_tot)
+
+
 
 #  NBODY
 
 m0N = np.genfromtxt( "../m1e4_1_Nbody6_notidal/data_Nbody6_0.0", usecols=(0),skip_header=1, comments="#", unpack=True)
 a=np.log10(min(m0N))
 b=np.log10(max(m0N))
-mybins=np.logspace(a,b,num=20)
-plt.hist(m0N,bins=mybins,histtype='step',log=True, linewidth=2, label="Nbody, t=0 Myr")
+mybins=np.logspace(a,b,num=50)
+ax[0].hist(m0N,bins=mybins,histtype='step',log=True, linewidth=2,color='blue', label="Nbody")
 m0_tot=np.sum(m0N)
 
 
 
-mfN = np.genfromtxt( "../m1e4_1_Nbody6_notidal/data_Nbody6_117.133", usecols=(0),skip_header=1, comments="#", unpack=True)
-l=np.log10(min(mfN))
-m=np.log10(max(mfN))
-mybins=np.logspace(l,m,num=20)
-plt.hist(mfN,bins=mybins,histtype='step',log=True, linewidth=2, label="Nbody, t=117.133 Myr")
-mf_tot=np.sum(mfN)
-
 print("Initial mass Nbody: ", m0_tot)
-print("Final mass Nbody: ", mf_tot)
 
 
 
 
-
-plt.xscale=("log")
-plt.xlabel("M [$M_{\odot}$]")
-plt.ylabel("Number of stars")
-plt.tight_layout()
-plt.legend()
+#plt.xscale=("log")
+#ax[0].set_xlabel("M [$M_{\odot}$]")
+ax[0].set_ylabel("Number of stars")
+ax[1].set_xlabel("M [$M_{\odot}$]")
+ax[1].set_ylabel("Number of stars")
+ax[0].legend()
+ax[1].legend()
+#fig.tight_layout()
+#plt.savefig("Mass_distribution.pdf")
 plt.show()
 

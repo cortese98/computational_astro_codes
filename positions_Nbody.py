@@ -34,7 +34,7 @@ rcore = np.zeros(len(files_snap))
 rhm_old = np.zeros(len(files_snap))
 rcore_old = np.zeros(len(files_snap))
 
-
+k=0
 for i in range(len(files_snap)):
 	
     print(sim_path+"data_Nbody6_"+str(files_snap[i]))
@@ -44,13 +44,14 @@ for i in range(len(files_snap)):
     lndens=np.log10(dens)
     plt.scatter(x,y,s=3,c=lndens)
     cbar=plt.colorbar()
-    plt.clim(0,5)
+    plt.clim(0,4)
     plt.xlim(-5,5)
     plt.ylim(-5,5)
     plt.xlabel("X [pc]")
     plt.ylabel("Y [pc]")
     plt.title(f"Time= {files_snap[i]} Myr",loc='center')
-    cbar.set_label(r"$\rho [M_{\odot}/pc^3]$")
-    plt.savefig(f"posizioni_Nbody_noTidal/positions_Nbody_{files_snap[i]}_NT.png")
+    cbar.set_label(r"$log(\rho)$ $ [M_{\odot}/pc^3]$")
+    plt.savefig(f"posizioni_Nbody_noTidal/Center/positions_Nbody_{k}.png")
+    k+=1
     plt.clf()
     

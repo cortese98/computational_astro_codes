@@ -26,7 +26,7 @@ for f in files:
 files_snap = np.sort(np.array(files_snap))
 
 m_tot=np.zeros(len(files_snap))
-
+n_tot=np.zeros(len(files_snap))
 
 for i in range(len(files_snap)):
 	
@@ -34,8 +34,8 @@ for i in range(len(files_snap)):
 	#Load masses, positions velocities
     m = np.genfromtxt(sim_path+"data_Nbody6_"+str(files_snap[i]), comments="#", unpack=True, usecols=(0))
     m_tot[i]=np.sum(m)
-	
+    n_tot[i]=len(m)
 	
 #Save the radii information in a file	
-X = np.stack((files_snap,m_tot),axis=-1)
-np.savetxt('total_mass_Nbody.txt',X,delimiter="        ",fmt='%.4f %.8f')
+X = np.stack((files_snap,m_tot,n_tot),axis=-1)
+np.savetxt('total_mass_Nbody.txt',X,delimiter="        ",fmt='%.4f %.8f %.1f')

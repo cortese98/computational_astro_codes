@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 14})
 
-t1,lm_petar,hm_petar = np.genfromtxt('segregation_PeTar.txt',usecols=(0,1,2),unpack=True)
+t1,lm_petar,hm_petar = np.genfromtxt('segregation_PeTar_totali.txt',usecols=(0,1,2),unpack=True)
 
 t2,lm_nbody,hm_nbody=np.genfromtxt('segregation_Nbody.txt',usecols=(0,1,2),unpack=True)
 
