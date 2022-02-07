@@ -89,7 +89,7 @@ np.savetxt('segregation_Nbody.txt',X,delimiter="        ",fmt='%.1f %.8f %.8f')
 
 
 
-#Plot the evolutions of the
+#Plot the evolutions of the two radii
 
 plt.plot(files_snap,low_m_lagr,color='r',label=r'Low mass stars ($M < 10 M_{\odot}$)')
 plt.plot(files_snap,high_m_lagr,color='b',label=r'High mass stars ($M > 10 M_{\odot}$)')
