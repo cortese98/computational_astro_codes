@@ -10,7 +10,7 @@ fig,ax = plt.subplots(2,1,figsize=(8,8),sharex=True)
 plt.subplots_adjust(hspace=0.00)
 
 
-# PETAR
+# PETAR TOTAL STARS
 
 m0p = np.genfromtxt( "../sim_hydro_m1e41/data.0", usecols=(0),skip_header=1, comments="#", unpack=True)
 a=np.log10(min(m0p))
@@ -19,6 +19,12 @@ mybins=np.logspace(a,b,num=50)
 ax[0].hist(m0p,bins=mybins,histtype='step',log=True,linewidth=2,color='orange', label="Petar, total stars")
 ax[1].hist(m0p,bins=mybins,histtype='step',log=True,linewidth=2,color='orange', label="Petar, total stars")
 m0_tot=np.sum(m0p)
+
+
+
+#PETAR SINGLE+BINARY STARS
+
+
 
 m0tot=[]
 
