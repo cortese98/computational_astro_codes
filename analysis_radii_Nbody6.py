@@ -11,15 +11,10 @@ from modules import *
 sim_path = "../m1e4_1_Nbody6_notidal/"
 
 
-
-################################################################
-#main
-################################################################
-
-
 files = []
 
 #Find all "data" files in the selected path
+
 for r, d, f in os.walk(sim_path):
     for file in f:
         if 'data' in file: 
