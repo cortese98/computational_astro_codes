@@ -5,7 +5,7 @@ import os
 import scipy.spatial as spat
 from modules import *
 
-plt.rcParams.update({'font.size': 14})
+plt.rcParams.update({'font.size': 18})
 
 sim_path = "../sim_hydro_m1e41/"
 	
@@ -133,7 +133,7 @@ np.savetxt('segregation_PeTar.txt',X,delimiter="        ",fmt='%.1f %.8f %.8f')
 
 
 
-#Plot the evolutions of the half mass radii
+#Plot the evolutions of the lagrangian radii
 
 plt.plot(files_snap,low_m_lagr,color='r',label=r'Low mass stars ($M < 10 M_{\odot}$)')
 plt.plot(files_snap,high_m_lagr,color='b',label=r'High mass stars ($M > 10 M_{\odot}$)')
