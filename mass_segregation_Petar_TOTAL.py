@@ -89,8 +89,8 @@ for i in files_snap:
     z_hm=np.array(z_hm)
     
 
-    low_m_lagr[i]=lagr_radius(m_lm,x_lm,y_lm,z_lm,lagr=20) #Low mass stars half mass radius
-    high_m_lagr[i]=lagr_radius(m_hm,x_hm,y_hm,z_hm,lagr=20) #High mass stars half mass radius
+    low_m_lagr[i]=lagr_radius(m_lm,x_lm,y_lm,z_lm,lagr=20) #Low mass stars 20% lagrangian radius
+    high_m_lagr[i]=lagr_radius(m_hm,x_hm,y_hm,z_hm,lagr=20) #High mass stars 20% lagrangian radius
     print(len(mtot),np.sum(mtot))
     print(len(m_lm),np.sum(m_lm))
     print (len(m_hm),np.sum(m_hm))
