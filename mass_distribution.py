@@ -9,6 +9,7 @@ fig,ax = plt.subplots(2,1,figsize=(8,8),sharex=True)
 #plt.subplots_adjust(wspace=0.00)
 plt.subplots_adjust(hspace=0.00)
 
+#READ THE INITIAL MASS OF THE STARS
 
 # PETAR TOTAL STARS
 
@@ -18,8 +19,6 @@ b=np.log10(max(m0p))
 mybins=np.logspace(a,b,num=50)
 ax[0].hist(m0p,bins=mybins,histtype='step',log=True,linewidth=2,color='orange', label="Petar, total stars")
 ax[1].hist(m0p,bins=mybins,histtype='step',log=True,linewidth=2,color='orange', label="Petar, total stars")
-m0_tot=np.sum(m0p)
-
 
 
 #PETAR SINGLE+BINARY STARS
@@ -55,12 +54,11 @@ a=np.log10(min(m0N))
 b=np.log10(max(m0N))
 mybins=np.logspace(a,b,num=50)
 ax[0].hist(m0N,bins=mybins,histtype='step',log=True, linewidth=2,color='blue', label="Nbody")
-m0_tot=np.sum(m0N)
 
 
 
-print("Initial mass Nbody: ", m0_tot)
 
+#PLOT THE MASS DISTRIBUTIONS 
 
 
 
