@@ -38,11 +38,14 @@ m_massive= []
 for i in range(len(files_snap)):
 
     print(sim_path+"data_Nbody6_"+str(files_snap[i]))
-	#Load masses, positions velocities
+	#Load masses, positions velocities of Nbody outputs
     m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data_Nbody6_"+str(files_snap[i]), comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
     
     #evaluate density and rescale to the center of density
     dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
+	
+    #Take the high mass stars and calculate its distance from the density center
+
     for j in range (len(m)):
         if (m[j] > 10.):
             r= np.sqrt(x[j]**2 + y[j]**2 + z[j]**2)
@@ -54,6 +57,8 @@ r_massive=np.array(r_massive)
 t_massive=np.array(t_massive)
 m_massive=np.array(m_massive)
 m_massive=np.log10(m_massive)
+
+#Plot the track of the massive stars
 
 plt.scatter(t_massive,r_massive, s=6 ,c=m_massive ,label="Massive stars")
 cbar=plt.colorbar()
