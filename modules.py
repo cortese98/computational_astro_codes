@@ -76,7 +76,7 @@ def lagr_radius(m,x,y,z, lagr=50):
 
 
 
-#Function to evaluate the center of mass of a binary system
+#Function to evaluate the center of mass of a binary system (Never been used)
 
 def binary_center(m1,x1,y1,z1,m2,x2,y2,z2):
     m=np.zeros(len(m1))
