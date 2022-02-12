@@ -4,11 +4,16 @@ import matplotlib.pyplot as plt
 
 plt.rcParams.update({'font.size': 18})
 
+#Read the core and the half mass radii from the files created by analysis script
+
 
 t1,rhm1,rcore1=np.genfromtxt('radii_PeTar.txt',usecols=(0,1,2),unpack=True)
 t1b,rhm1b,rcore1b=np.genfromtxt('radii_PeTar_binary.txt',usecols=(0,1,2),unpack=True)
 t2,rhm2,rcore2=np.genfromtxt('radii_Nbody_noTidal.txt',usecols=(0,1,2),unpack=True)
                     
+
+#Plot the evolution of the radii
+
 
 fig, ax = plt.subplots(2,1,sharex='col', figsize=(8,8))
 plt.subplots_adjust(wspace=0.00)
