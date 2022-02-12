@@ -36,31 +36,73 @@ t_massive= []
 m_massive= []
 
 
-
 for i in files_snap:
+    mtot=[]
+    xtot=[]
+    ytot=[]
+    ztot=[]
+    vxtot=[]
+    vytot=[]
+    vztot=[]
+
     print(sim_path+"data."+str(i))
+
+    #SINGLE STARS
+    
     m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data."+str(i)+".single", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
-    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
+
     for j in range (len(m)):
-        if (m[j] > 10.):
-            r= np.sqrt(x[j]**2 + y[j]**2 + z[j]**2)
+        mtot.append(m[j])
+        xtot.append(x[j])
+        ytot.append(y[j])
+        ztot.append(z[j])
+        vxtot.append(vx[j])
+        vytot.append(vy[j])
+        vztot.append(vz[j])
+
+
+    #BINARY STARS
+    
+
+    mb, xb, yb, zb, vxb, vyb, vzb = np.genfromtxt(sim_path+"data."+str(i)+".binary", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
+#    dens, xb, yb, zb, vxb, vyb, vzb = find_and_rescale_cod(mb, xb, yb, zb, vxb, vyb, vzb)
+    for j in range (0,len(mb)):
+        mtot.append(mb[j])
+        xtot.append(xb[j])
+        ytot.append(yb[j])
+        ztot.append(zb[j])
+        vxtot.append(vxb[j])
+        vytot.append(vyb[j])
+        vztot.append(vzb[j])
+    
+    mtot=np.array(mtot)
+    xtot=np.array(xtot)
+    ytot=np.array(ytot)
+    ztot=np.array(ztot)
+    vxtot=np.array(vxtot)
+    vytot=np.array(vytot)
+    vztot=np.array(vztot)
+
+    #Rescales for the density center
+
+    dens, xtot, ytot, ztot, vxtot, vytot, vztot = find_and_rescale_cod(mtot, xtot, ytot, ztot, vxtot, vytot, vztot)
+
+    #Take the massive stars and evaluate the distance from the center
+    
+    for j in range (len(mtot)):
+        if (mtot[j] > 10.):
+            r= np.sqrt(xtot[j]**2 + ytot[j]**2 + ztot[j]**2)
             r_massive.append(r)
             t_massive.append(i)
-            m_massive.append(m[j])
-    m, x, y, z, vx, vy, vz = np.genfromtxt(sim_path+"data."+str(i)+".binary", skip_header=1, comments="#", unpack=True, usecols=(0,1,2,3,4,5,6))
-    dens, x, y, z, vx, vy, vz = find_and_rescale_cod(m, x, y, z, vx, vy, vz)
-    for j in range (len(m)):
-        if (m[j] > 10.):
-            r= np.sqrt(x[j]**2 + y[j]**2 + z[j]**2)
-            r_massive.append(r)
-            t_massive.append(i)
-            m_massive.append(m[j])
+            m_massive.append(mtot[j])
 
 r_massive=np.array(r_massive)
 t_massive=np.array(t_massive)
 m_massive=np.array(m_massive)
 m_massive=np.log10(m_massive)
-m_large=0.0
+
+
+#Plot the massive stars tracks
 
 plt.scatter(t_massive,r_massive, s=6, c=m_massive , label="Massive stars")
 cbar=plt.colorbar()
